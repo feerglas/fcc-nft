@@ -16,16 +16,16 @@ module.exports = async ({ getNamedAccounts }) => {
   const randomIpfsNft = await ethers.getContract('RandomIpfsNft', deployer);
   const mintFee = await randomIpfsNft.getMintFee();
 
+  const randomIpfsNftMintTx = await randomIpfsNft.requestNft({
+    value: mintFee.toString(),
+  });
+  const randomIpfsNftMintTxReceipt = await randomIpfsNftMintTx.wait(1);
+
   await new Promise(async (resolve, reject) => {
     setTimeout(resolve, 300000);
-    randomIpfsNft.once('NftMinted', async function () {
+    randomIpfsNft.once('NftMinted', async () => {
       resolve();
     });
-
-    const randomIpfsNftMintTx = await randomIpfsNft.requestNft({
-      value: mintFee.toString(),
-    });
-    const randomIpfsNftMintTxReceipt = await randomIpfsNftMintTx.wait(1);
 
     if (developmentChains.includes(network.name)) {
       const requestId =
@@ -56,3 +56,5 @@ module.exports = async ({ getNamedAccounts }) => {
 
   console.log('####### end minting nfts #######');
 };
+
+module.exports.tags = ['all', 'mint'];
