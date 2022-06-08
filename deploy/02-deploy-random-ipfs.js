@@ -30,6 +30,8 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deployer } = await getNamedAccounts();
   const chainId = network.config.chainId;
 
+  log('####### deploy random ipfs #######');
+
   // get ipfs hashes of the images
   let tokenUris = [
     'ipfs://QmNddFsneWThscVTyaTPWoiYAe5X462TSq27Bg2NX6HeWh',
@@ -58,7 +60,6 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     subscriptionId = networkConfig[chainId].subscriptionId;
   }
 
-  console.log('-------------------------');
   const args = [
     vrfCoordinatorV2Address,
     subscriptionId,
@@ -76,7 +77,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   });
 
   // Verify the deployment
-  console.log('-------------------------');
+  log('####### verify random ipfs #######');
   if (
     !developmentChains.includes(network.name) &&
     process.env.ETHERSCAN_API_KEY
@@ -85,7 +86,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     await verify(randomIpfsNft.address, args);
   }
 
-  console.log('-------------------------');
+  log('####### end random ipfs #######');
 };
 
 async function handleTokenUris() {
