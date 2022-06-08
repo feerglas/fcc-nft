@@ -10,7 +10,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deploy, log } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  log('####### deploy dynamic svg nft #######');
+  console.log('####### deploy dynamic svg nft #######');
 
   const chainId = network.config.chainId;
   let ethUsdPriceFeedAddress;
@@ -39,16 +39,16 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   });
 
   // Verify the deployment
-  log('####### verify dynamic svg nft #######');
+  console.log('####### verify dynamic svg nft #######');
   if (
     !developmentChains.includes(network.name) &&
     process.env.ETHERSCAN_API_KEY
   ) {
-    log('Verifying...');
+    console.log('Verifying...');
     await verify(dynamicSvgNft.address, args);
   }
 
-  log('####### end dynamic svg nft #######');
+  console.log('####### end dynamic svg nft #######');
 };
 
 module.exports.tags = ['all', 'dynamicsvg', 'main'];

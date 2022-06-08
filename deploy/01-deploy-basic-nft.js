@@ -6,7 +6,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deploy, log } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  log('####### deploy basic nft #######');
+  console.log('####### deploy basic nft #######');
   arguments = [];
   const basicNft = await deploy('BasicNft', {
     from: deployer,
@@ -20,11 +20,11 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     !developmentChains.includes(network.name) &&
     process.env.ETHERSCAN_API_KEY
   ) {
-    log('####### verify basic nft #######');
+    console.log('####### verify basic nft #######');
     await verify(basicNft.address, arguments);
   }
 
-  log('####### end basic nft #######');
+  console.log('####### end basic nft #######');
 };
 
 module.exports.tags = ['all', 'basicnft', 'main'];
